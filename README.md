@@ -11,10 +11,10 @@ A retrieval-augmented generation (RAG) pipeline that answers questions grounded 
 4. **Store** — Vectors are persisted in a local **ChromaDB** vector store.
 
 **Query (run per question):**
-5. **Embedding** - A user's question is embedded with the same MiniLM model.
-6. **Retrieval** - The vector store returns the most similar chunks via cosine similarity, filtered by a minimum relevance score.
-7. **Augmentation** - Retrieved chunks are assembled into a prompt alongside the question.
-8. **Groq generation** (`openai/gpt-oss-20b`) generates a grounded answer, returned with source citations, a confidence score, and running conversation history.
+1. **Embedding** - A user's question is embedded with the same MiniLM model.
+2. **Retrieval** - The vector store returns the most similar chunks via cosine similarity, filtered by a minimum relevance score.
+3. **Augmentation** - Retrieved chunks are assembled into a prompt alongside the question.
+4. **Groq generation** (`openai/gpt-oss-20b`) generates a grounded answer, returned with source citations, a confidence score, and running conversation history.
 
 ## Stack
 
