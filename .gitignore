@@ -11,3 +11,4 @@ wheels/
 .env
 data/pdf_candidates/
 .DS_Store
+data/vector_store/
