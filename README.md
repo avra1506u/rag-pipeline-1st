@@ -1,6 +1,12 @@
 # RAG Pipeline — PDF & Text Q&A with Source Citations
 
-A retrieval-augmented generation (RAG) pipeline that answers questions grounded in a set of source documents — three research papers(PDFs) ("Attention Is All You Need", BERT, and ResNet) and 2 short text files — with cited sources, confidence scores, and conversation history.
+A retrieval-augmented generation (RAG) pipeline that answers questions grounded in a set of source documents, with cited sources, confidence scores, and conversation history.
+
+## Corpus
+
+- **23 PDFs total:** the original 3 foundational ML papers ("Attention Is All You Need", BERT, ResNet) plus 20 additional papers sampled from the [Vectara Open RAG Benchmark](https://huggingface.co/datasets/vectara/open_ragbench) (text-only use — see `download_and_filter_corpus.py`).
+- **2 short text files.**
+- Papers were selected from 200 candidates using a text-density heuristic (chars/page) to favor prose-heavy documents over table/figure-heavy ones — see `corpus_report.txt` for the full kept/dropped breakdown and scores.
 
 ## How it works
 
@@ -32,4 +38,21 @@ source .venv/bin/activate
 uv add -r requirements.txt
 ```
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root (never commit this — it's gitignored):
+
+```
+GROQ_API_KEY=your_key_here
+```
+
+Get a free key at [console.groq.com](https://console.groq.com). Each contributor should use their own key.
+
+**Note:** `data/vector_store/` is gitignored (it exceeds GitHub's 100MB file limit and is fully regenerable). After pulling, re-run the ingestion/embedding cells in `notebook/pdf_loader.ipynb` to build your own local vector store from the PDFs in `data/pdf/`.
+
+## Adding more papers
+
+`download_and_filter_corpus.py` downloads a batch of candidate arXiv papers (by ID) and automatically keeps only the top N most text-dense ones (see script for config). Useful for expanding the corpus without manually checking every PDF for table/figure-heavy content.
+
+## Known limitations
+
+- Retrieval can fail on questions phrased with different terminology than the source text — e.g. "skip connection" doesn't reliably retrieve content that only uses the term "shortcut connection," even at a similarity threshold of 0.0. Some genuinely relevant chunks can score negative similarity.
+- The `AdvancedRAGPipeline` class (in `pdf_loader.ipynb`) does not currently return a confidence score — use the `rag_advanced()` function instead when confidence scores are needed.
