@@ -1,6 +1,6 @@
 # RAG Pipeline — PDF & Text Q&A with Source Citations
 
-A retrieval-augmented generation (RAG) pipeline that answers questions grounded in a set of source documents — three research papers(PDFs) ("Attention Is All You Need," BERT, and ResNet) and 2 short text files — with cited sources, confidence scores, and conversation history.
+A retrieval-augmented generation (RAG) pipeline that answers questions grounded in a set of source documents — three research papers(PDFs) ("Attention Is All You Need", BERT, and ResNet) and 2 short text files — with cited sources, confidence scores, and conversation history.
 
 ## How it works
 
